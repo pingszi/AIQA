@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "D:/python/Anaconda3/envs/aiqa2/python",
+    "python.linting.pylintArgs": ["--load-plugins", "pylint_django"]
+}

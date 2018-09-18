@@ -1,0 +1,157 @@
+{% extends base_template %}
+{% load i18n %}
+
+{% load xadmin_tags %}
+
+{% block extrastyle %}
+<style type="text/css">
+    .btn-toolbar{margin-top: 0;}
+    #content-block.full-content{margin-left: 0;}
+</style>
+{% endblock %}
+{% block bodyclass %}change-list{% endblock %}
+
+{% block nav_title %}{% if brand_icon %}<i class="{{brand_icon}}"></i> {% endif %}{{brand_name}}{% endblock %}
+
+{% block nav_toggles %}
+{% include "xadmin/includes/toggle_menu.html" %}
+{% endblock %}
+
+{% block nav_btns %}
+
+{% endblock nav_btns %}
+
+{% block content %}
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <div id="7_day" style="width: 100%;height: 260px"></div>
+        </div>
+        <div class="col-md-6 column">
+            <div id="4_week" style="width: 100%;height: 260px"></div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <div id="12_month" style="width: 100%;height: 260px"></div>
+        </div>
+        <div class="col-md-6 column">
+            <div id="total" style="width: 100%;height: 260px;margin-top: 130px" class="text-center">
+                总知识量：<span id="total_qty"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/echarts/echarts.min.js"></script>
+<script src="/static/common/js/common.js"></script>
+<script src="/static/common/js/base_chart.js"></script>
+<script>
+    $(document).ready(function(){
+        let params = {};
+        params.fields = "curdate() curentDay,weekofyear(curdate()) curentWeek,month(curdate()) curentMonth";
+        params.table = "dual";
+        Util.getData(params).then(jsonArray => init(jsonArray[0]));
+    });
+
+    //**初始化
+    function init(curent) {
+        let params = {};
+        params.fields = "date_format(add_time, '%Y-%m-%d') name,count(*) value";
+        params.table = "tax_knowledge";
+        params.where = "add_time between date_add(curdate(), interval -7 day) and curdate() + 1";
+        params.group = "date_format(add_time, '%Y-%m-%d')";
+        params.order = "date_format(add_time, '%Y-%m-%d')";
+        Util.getData(params).then(jsonArray => {
+            //**计算最近7天
+            let days = [];
+            for(let i = 6; i >= 0; i--){
+                date = new Date(curent.curentDay);
+                date.setDate(date.getDate() - i);
+                days[6 - i] = {"name": date.format("yyyy-MM-dd"), "value": 0};
+            }
+            
+            days = days.map(day => {
+                let s = jsonArray.find(json => json.name == day.name);
+                return s ? s : day;
+            }); 
+
+            let bar = new BaseBar("7_day", null, "最近7天的知识量");
+            bar.setData(days);
+            bar.show();
+        });
+
+        params.fields = "concat('第', weekofyear(add_time), '周') name,count(*) value";
+        params.table = "tax_knowledge";
+        params.where = "add_time between subdate(date_add(curdate(), interval -3 week), weekday(date_add(curdate(), interval -3 week))) and curdate() + 1";
+        params.group = "concat('第', weekofyear(add_time), '周')";
+        params.order = "concat('第', weekofyear(add_time), '周')";
+        Util.getData(params).then(jsonArray => {
+            //**计算最近4周
+            let days = [];
+            for(let i = 3; i >= 0; i--){
+                date = curent.curentWeek - i
+                console.log(date)
+                var weekNowYear = 0
+                if(date >= 1){
+                    days[3 - i] = {"name": "第"+date+"周", "value": 0};
+                    weekNowYear = i
+                }else{
+                    function getYearWeek(date){ 
+                        var date2=new Date(date.getFullYear(), 0, 1); 
+                        var day1=date.getDay(); 
+                        if(day1==0) day1=7; 
+                        var day2=date2.getDay(); 
+                        if(day2==0) day2=7; 
+                        d = Math.round((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);   
+                        return Math.ceil(d /7)+1;  
+                    } 
+                    year = new Date(curent.curentDay).getFullYear()-1 + "-12-31";
+                    var weekNow = getYearWeek(new Date(year))
+                    week = weekNow - (i - weekNowYear)
+                    days[3 - i] = {"name": "第"+week+"周", "value": 0};
+                }
+            }
+            
+            days = days.map(day => {
+                let s = jsonArray.find(json => json.name == day.name);
+                return s ? s : day;
+            }); 
+
+            let bar = new BaseBar("4_week", null, "最近一个月的知识量");
+            bar.setData(days);
+            bar.show();
+        });
+
+        params.fields = "date_format(add_time, '%Y-%m') name,count(*) value";
+        params.table = "tax_knowledge";
+        params.where = "add_time between concat(date_format(date_add(curdate(), interval -11 month), '%Y-%m'), '-01') and curdate() + 1";
+        params.group = "date_format(add_time, '%Y-%m')";
+        params.order = "date_format(add_time, '%Y-%m')";
+        Util.getData(params).then(jsonArray => {
+            //**计算最近一年
+            let days = [];
+            for(let i = 11; i >= 0; i--){
+                date = new Date(curent.curentDay);
+                date.setMonth(date.getMonth() - i);
+                days[11 - i] = {"name": date.format("yyyy-MM"), "value": 0};
+            }
+            
+            days = days.map(day => {
+                let s = jsonArray.find(json => json.name == day.name);
+                return s ? s : day;
+            }); 
+
+            let bar = new BaseBar("12_month", null, "最近一年的知识量");
+            bar.setData(days);
+            bar.show();
+        });
+
+        params = {}
+        params.fields = "count(*) value";
+        params.table = "tax_knowledge";
+        Util.getData(params).then(json =>  $("#total_qty").text(json[0].value));
+    }
+
+    
+</script>
+{% endblock %}
