@@ -8,7 +8,7 @@ from abc import ABCMeta, abstractmethod
 
 from django.core.cache import cache
 
-from AIQA.settings import DEBUG,policy_content_url,policy_content_url_test
+from AIQA.settings import DEBUG,policy_content_url
 from common.util.commondao import MysqlCommonDao
 from common.algorithm.common import TfIdf, MMParticiple, individual_tax_decor
 from common.util.decorators import metric
@@ -243,7 +243,7 @@ class BaseModelMatchedAnswer(AbstractModelMatchedAnswer):
 
     def get_policy_content(self, question, answer) -> tuple:
         '''
-        url = policy_content_url_test if DEBUG else policy_content_url
+        url = policy_content_url
         url += question
         try:
             req = requests.get(url)

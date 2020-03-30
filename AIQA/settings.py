@@ -227,5 +227,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')#这个是在浏览器上访问该
 
 # **项目自定义配置
 # **相关政策文件接口地址
-policy_content_url_test = ""
-policy_content_url = ""
+if DEBUG:
+    policy_content_url = ""
+else:
+    policy_content_url  = ""
