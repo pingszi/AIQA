@@ -472,7 +472,7 @@ class SynonymeModelMatchedAnswer(BaseModelMatchedAnswer):
                    where keyword = '{0}' or word = '{0}'
               '''
         sql = " union ".join((sql.format(w) for w in set(word_tuple)))
-        synonym_list = (d for d in self.dao.findall(sql) if d["synonym"])
+        synonym_list = [d for d in self.dao.findall(sql) if d["synonym"]]
 
         # **问题关键字(包含全局同义词)
         def get_synonym(word):

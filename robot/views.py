@@ -112,11 +112,11 @@ def unsolved_email(request):
     #发送邮件
     def sendEMail(content):
         mail = {
-            'subject': '智能问答客户邮件咨询问题',  # Anything you want.
-            'content': content,  # Anything you want.
+            'subject': '智能问答客户邮件咨询问题',  # Anything you want.
+            'content_text': content,  # Anything you want.
         }
-        server = zmail.server('xujunjianyh@163.com', '1qazxsw2') 
-        server.send_mail(teacher_email, mail)
+        server = zmail.server('zhouping1182969@163.com', 'SGDGMDAHXOSXUKXV') 
+        server.send_mail(teacher_email, mail, cc='zhouping1182969@163.com')
 
     rst = '参数不能为空'
     if uuid_key != '' and email != '': 

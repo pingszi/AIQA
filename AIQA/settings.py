@@ -105,11 +105,11 @@ WSGI_APPLICATION = 'AIQA.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tax_kbase',
-        'HOST': '192.168.1.123',
-        'PORT': '3306',
+        'NAME': 'pings-aiqa',
+        'HOST': 'www.pingssys.com',
+        'PORT': '31001',
         'USER': 'root',
-        'PASSWORD': '123456',
+        'PASSWORD': 'Zhou1182969',
     }
 }
 
@@ -158,11 +158,12 @@ STATICFILES_DIRS = (
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://192.168.1.123:6379/1',
+        'LOCATION': 'redis://www.pingssys.com:32000/1',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             #  **忽略连接异常
             'IGNORE_EXCEPTIONS': True,
+            "PASSWORD": "Zhou1182969",
         },
     },
 }
@@ -226,5 +227,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')#这个是在浏览器上访问该
 
 # **项目自定义配置
 # **相关政策文件接口地址
-policy_content_url_test = "http://192.168.1.86:8080/solr/taxtao_law_lib_article/select?indent=on&wt=json&q=articleContent:"
-policy_content_url = "http://10.10.10.235:8080/solr/taxtao_law_lib_article/select?indent=on&wt=json&q=articleContent:"
+policy_content_url_test = ""
+policy_content_url = ""
