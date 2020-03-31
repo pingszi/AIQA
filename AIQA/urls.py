@@ -20,7 +20,7 @@ xadmin.autodiscover()
 
 
 urlpatterns = [
-    path('', xadmin.site.urls),
+    path('admin/', xadmin.site.urls),
     path('ueditor/', include('DjangoUeditor.urls')),
     
     # **机器人配置
