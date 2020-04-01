@@ -18,9 +18,12 @@ from django.urls import path
 import xadmin
 xadmin.autodiscover()
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
-    path('admin/', xadmin.site.urls),
+    path('', xadmin.site.urls),
     path('ueditor/', include('DjangoUeditor.urls')),
     
     # **机器人配置
@@ -31,4 +34,4 @@ urlpatterns = [
 
     # **通用功能配置
     path('common/', include('common.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

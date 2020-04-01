@@ -223,7 +223,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True # **关闭浏览器
 
 # **uediter配置
 MEDIA_URL = '/upload/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')#这个是在浏览器上访问该上传文件的url的前缀
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')#这个是在浏览器上访问该上传文件的url的前缀
 
 # **项目自定义配置
 # **相关政策文件接口地址
