@@ -176,8 +176,6 @@ class TaxKnowledgeAdmin(object):
     add_form_template = "taxknowledge/tax_knowledge_add.html"
     change_form_template = "taxknowledge/tax_knowledge_modify.html"
 
-    style_fields = {"sd_answer": "ueditor"}
-
     def save_models(self):
         flag = self.org_obj is None and 'create' or 'change'
 

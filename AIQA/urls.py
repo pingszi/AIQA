@@ -24,7 +24,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', xadmin.site.urls),
-    path('ueditor/', include('DjangoUeditor.urls')),
+    path('mdeditor/', include('mdeditor.urls')),
     
     # **机器人配置
     path('AIQA/v1/', include('robot.urls')),

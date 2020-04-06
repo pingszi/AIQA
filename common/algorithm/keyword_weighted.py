@@ -16,6 +16,7 @@ from common.util.utils import CollectionsUtil
 from mgbase.models.bus_models import TaxKnowledge, TaxExtendQuestion
 from mgbase.models.bas_models import TaxBasData, TaxBasKeyword
 from common.apps import logger
+import markdown
 
 
 class AbstractModelMatchedAnswer(object):
@@ -283,7 +284,7 @@ class BaseModelMatchedAnswer(AbstractModelMatchedAnswer):
             if level2 and end > 0:
                 qes += [{"id": i[pid], "question": TaxKnowledge.objects.get(id=i[pid]).sd_question} for i in level2[:end]]
 
-            rst = {"token": 1, "content": {"question": question, "answer": answer,
+            rst = {"token": 1, "content": {"question": question, "answer": markdown.markdown(answer),
                                            "policyContent": policy_content,
                                            "relativeQuestionList": qes}}
         if use_cache:

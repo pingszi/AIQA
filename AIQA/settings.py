@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
 
-    # **Ueditor
-    'DjangoUeditor',
+    # **mdeditor
+    'mdeditor',
 
     'common.apps.CommonConfig',
     'robot.apps.RobotConfig',

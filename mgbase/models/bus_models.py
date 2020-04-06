@@ -1,5 +1,5 @@
 from django.db import models
-from DjangoUeditor.models import UEditorField
+from mdeditor.fields import MDTextField
 
 class TaxKnowledge(models.Model):
     """
@@ -11,7 +11,7 @@ class TaxKnowledge(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="编号")
     counter = models.PositiveIntegerField(default=0, verbose_name="点击数")
     sd_question = models.CharField(max_length=1000, verbose_name="问题")
-    sd_answer = UEditorField(verbose_name="答案", height=450, width=1000, max_length=4000)
+    sd_answer = MDTextField(verbose_name="答案", max_length=4000)
 
     # **v1.4
     class_tag = models.CharField(verbose_name="分类标签", max_length=100, null=True, blank=True)
