@@ -1,0 +1,45 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,input,p,blockquote,th,td {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-size: 13px;
+    color: #666;
+    font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+    background: #f6f6f6;
+    overflow: hidden;
+    line-height: 2em;
+  }
+  fieldset,img {
+    border: 0;
+  }
+  ol,ul {
+    list-style: none;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-size: 100%;
+  }
+  em {
+    font-style: normal;
+  }
+  input,button,select,textarea {
+    outline: none;
+  }
+  textarea {
+    resize: none;
+  } /* 禁用了文本的拖拉，尤其在谷歌下 */
+  p {
+    text-align: justify;
+    text-justify: distribute;
+    text-indent: 2em;
+  } /* 为了使文本段落左右两边对齐 */
+  p {
+    word-wrap: break-word;
+  }
+  a {
+    text-decoration: none;
+  }
+  i {
+    display: inline-block;
+  }
+ 
