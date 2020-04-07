@@ -12,7 +12,7 @@
                             <msg-time :time="item.content.time" :role="item.host" />
                             <app-window-left-output-user-icon :user="item.host" :isLaoshi="item.content.isLaoshi"/>
                             <div class="answer">
-                                <div v-if="item.content.text.length!==0" v-html="item.content.text"></div>
+                                <vue-editor v-model="content" />
                                 <relative-file :fileList="item.content.relativeFileList" v-if="item.content.relativeFileList" :isHasSpread="true" />
                                 <relative-question :questionList="item.content.relativeQuestionList" v-if="item.content.relativeQuestionList" :isHasSpread="false" />
                                 <is-resolve v-if="item.content.isSetResolve" :question="item.content.question" />
@@ -38,6 +38,7 @@ import IsResolve from "./common/IsResolve";
 import IsSendEmail from "./common/IsSendEmail";
 import AppWindowLeftOutputUserIcon from "./AppWindowLeftOutputUserIcon";
 import AppWindowLeftOutputTips from './AppWindowLeftOutputTips';
+import { VueEditor } from 'vue2-editor';
 
 import { mapState } from "vuex";
 import {
@@ -57,7 +58,8 @@ export default {
         IsResolve,
         IsSendEmail,
         AppWindowLeftOutputUserIcon,
-        AppWindowLeftOutputTips
+        AppWindowLeftOutputTips,
+        VueEditor
     },
 
     props: {
@@ -76,7 +78,8 @@ export default {
     data() {
         return {
             nowTime: "",
-            isMoreFileShow: false
+            isMoreFileShow: false,
+            content: "<h1>Some initial content</h1>"
         };
     },
 
